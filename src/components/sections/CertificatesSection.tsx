@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Award } from "lucide-react";
 import { Lightbox } from "@/components/Lightbox";
 import certificateImage from "@/assets/certificate.jpg";
 
 export function CertificatesSection() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <section id="certificates" className="py-24 bg-card">
@@ -20,35 +19,55 @@ export function CertificatesSection() {
           </p>
         </div>
 
-        <div className="max-w-2xl mx-auto">
-          <button
-            onClick={() => setIsOpen(true)}
-            className="group w-full bg-background border border-border rounded-xl p-6 text-left hover:shadow-lg transition-all duration-400 ease-out-expo hover:-translate-y-1 animate-fade-in-up opacity-0"
+        <div className="max-w-3xl mx-auto">
+          <div
+            className="relative rounded-xl overflow-hidden animate-fade-in-up opacity-0 group"
             style={{ animationDelay: "0ms", animationFillMode: "forwards" }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors duration-300">
-                <Award className="w-6 h-6 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif text-lg mb-1 group-hover:text-primary transition-colors duration-300">
-                  Certificate of Completion
-                </h3>
-                <p className="text-muted-foreground text-sm mb-2">
-                  World of Adventures Travel and Tours
-                </p>
-                <p className="text-xs text-muted-foreground/70">
-                  Educational Tour in Cebu and Bohol - November 19-22, 2025
-                </p>
+            {/* Border animation with running light */}
+            <div className="absolute inset-0 rounded-xl pointer-events-none">
+              <div className="absolute inset-0 animate-border-light rounded-xl" />
+            </div>
+
+            {/* Certificate image container */}
+            <div className="relative bg-background border border-border rounded-xl overflow-hidden">
+              <img
+                src={certificateImage}
+                alt="Certificate of Completion"
+                className="w-full h-auto block transition-all duration-500"
+              />
+
+              {/* Hover overlay with details */}
+              <div
+                className={`absolute inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center rounded-xl transition-all duration-500 ${
+                  isHovered ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <div className="text-center text-white px-6">
+                  <h3 className="font-serif text-3xl mb-4 font-semibold">
+                    Certificate of Completion
+                  </h3>
+                  <p className="text-xl mb-3 text-gray-200">
+                    World of Adventures Travel and Tours
+                  </p>
+                  <p className="text-lg text-gray-300">
+                    Educational Tour in Cebu and Bohol
+                  </p>
+                  <p className="text-lg text-gray-300">
+                    November 19-22, 2025
+                  </p>
+                </div>
               </div>
             </div>
-          </button>
+          </div>
         </div>
       </div>
 
       <Lightbox
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        isOpen={false}
+        onClose={() => {}}
         imageSrc={certificateImage}
         title="Certificate of Completion"
       />

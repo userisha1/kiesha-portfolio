@@ -1,31 +1,21 @@
-import { useState } from "react";
-import { BookOpen } from "lucide-react";
-import { Lightbox } from "@/components/Lightbox";
+﻿import { useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-import j_1 from "@/assets/journal/j_1.JPG";
-import j_2 from "@/assets/journal/j_2.JPG";
-import j_3 from "@/assets/journal/j_3.JPG";
-import j_4 from "@/assets/journal/j_4.JPG";
-import j_5 from "@/assets/journal/j_5.JPG";
-import j_6 from "@/assets/journal/j_6.JPG";
-import j_7 from "@/assets/journal/j_7.JPG";
-import j_8 from "@/assets/journal/j_8.JPG";
-import j_9 from "@/assets/journal/j_9.JPG";
-
-const journalEntries = [
-  { id: 1, label: "Page 1", title: "WORLDTECH INFORMATION SOLUTIONS", image: j_1 },
-  { id: 2, label: "Page 2", title: "RIVAN IT CEBU", image: j_2 },
-  { id: 3, label: "Page 3", title: "CODECHUM", image: j_3 },
-  { id: 4, label: "Page 4", title: "MATA TECHNOLOGIES INC.", image: j_4 },
-  { id: 5, label: "Page 5", title: "T.A.R.S.I.E.R. 117", image: j_5 },
-  { id: 6, label: "Page 6", title: "Journal Entry", image: j_6 },
-  { id: 7, label: "Page 7", title: "Journal Entry", image: j_7 },
-  { id: 8, label: "Page 8", title: "Journal Entry", image: j_8 },
-  { id: 9, label: "Page 9", title: "Journal Entry", image: j_9 },
+const journalPages = [
+  { id: 1, label: "Page 1", title: "LEARNING JOURNAL", image: "/journal/j_1.JPG" },
+  { id: 2, label: "Page 2", title: "ITINERARY", image: "/journal/j_2.JPG" },
+  { id: 3, label: "Page 3", title: "GENERAL HOUSE RULES", image: "/journal/j_3.JPG" },
+  { id: 4, label: "Page 4", title: "WORLDTECH INFORMATION SOLUTIONS", image: "/journal/j_4.JPG" },
+  { id: 5, label: "Page 5", title: "RIVAN IT CEBU", image: "/journal/j_5.JPG" },
+  { id: 6, label: "Page 6", title: "CODECHUM", image: "/journal/j_6.JPG" },
+  { id: 7, label: "Page 7", title: "MATA TECHNOLOGIES INC.", image: "/journal/j_7.JPG" },
+  { id: 8, label: "Page 8", title: "T.A.R.S.I.E.R. 117", image: "/journal/j_8.JPG" },
+  { id: 9, label: "Page 9", title: "IMPRESSION SHEET", image: "/journal/j_9.JPG" },
 ];
 
 export function JournalSection() {
-  const [selectedEntry, setSelectedEntry] = useState<typeof journalEntries[0] | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
     <section id="journal" className="py-24 bg-background">
@@ -41,43 +31,104 @@ export function JournalSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {journalEntries.map((entry, index) => (
-            <button
-              key={entry.id}
-              onClick={() => setSelectedEntry(entry)}
-              className="group relative bg-card border border-border rounded-xl p-6 text-left hover:shadow-lg transition-all duration-400 ease-out-expo hover:-translate-y-1 animate-fade-in-up opacity-0"
-              style={{ animationDelay: `${index * 100}ms`, animationFillMode: "forwards" }}
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 bg-secondary rounded-lg flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors duration-300">
-                  <BookOpen className="w-7 h-7 text-secondary-foreground group-hover:text-primary transition-colors duration-300" />
-                </div>
-                <div className="flex-1">
-                  <span className="inline-block px-2 py-0.5 bg-primary/10 text-primary text-xs font-medium rounded mb-2">
-                    {entry.label}
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {journalPages.map((page, idx) => (
+              <button
+                key={page.id}
+                onClick={() => { setCurrentIndex(idx); setIsOpen(true); }}
+                className="group relative bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg transition-all duration-400 ease-out-expo hover:-translate-y-1 animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${idx * 80}ms`, animationFillMode: "forwards" }}
+                aria-label={`${page.label}: ${page.title}`}
+              >
+                <img
+                  src={page.image}
+                  alt={page.title}
+                  className="w-full h-48 sm:h-56 lg:h-64 object-cover"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                  <span className="inline-block px-2 py-0.5 bg-primary/90 text-primary-foreground text-xs font-medium rounded">
+                    {page.label}
                   </span>
-                  <h3 className="font-serif text-lg mb-1 group-hover:text-primary transition-colors duration-300">
-                    {entry.title}
+                  <h3 className="mt-2 font-serif text-white text-base">
+                    {page.title}
                   </h3>
                 </div>
-              </div>
-              
-              {/* Decorative corner */}
-              <div className="absolute top-0 right-0 w-8 h-8 overflow-hidden">
-                <div className="absolute top-0 right-0 w-12 h-12 bg-border transform rotate-45 translate-x-6 -translate-y-6" />
-              </div>
-            </button>
-          ))}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <Lightbox
-        isOpen={!!selectedEntry}
-        onClose={() => setSelectedEntry(null)}
-        imageSrc={selectedEntry?.image || ""}
-        title={selectedEntry ? `${selectedEntry.label}: ${selectedEntry.title}` : undefined}
-      />
+      {/* Journal Carousel Modal */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+          <div className="bg-card rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-border">
+              <div>
+                <h2 className="font-serif text-2xl mb-1">{journalPages[currentIndex].title}</h2>
+                <p className="text-sm text-muted-foreground">{journalPages[currentIndex].label}</p>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Carousel Content */}
+            <div className="flex-1 flex items-center justify-center bg-muted overflow-auto">
+              <img 
+                src={journalPages[currentIndex].image} 
+                alt={journalPages[currentIndex].title}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            {/* Navigation */}
+            <div className="flex items-center justify-between p-6 border-t border-border bg-background">
+              <button
+                onClick={() => setCurrentIndex(prev => prev === 0 ? journalPages.length - 1 : prev - 1)}
+                className="flex items-center gap-2 px-4 py-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                Previous
+              </button>
+
+              <div className="text-sm text-muted-foreground">
+                {currentIndex + 1} / {journalPages.length}
+              </div>
+
+              <button
+                onClick={() => setCurrentIndex(prev => prev === journalPages.length - 1 ? 0 : prev + 1)}
+                className="flex items-center gap-2 px-4 py-2 hover:bg-muted rounded-lg transition-colors"
+              >
+                Next
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Page Indicators */}
+            <div className="px-6 pb-6 flex flex-wrap gap-2 justify-center">
+              {journalPages.map((page, idx) => (
+                <button
+                  key={page.id}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+                    idx === currentIndex
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80"
+                  }`}
+                >
+                  {page.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

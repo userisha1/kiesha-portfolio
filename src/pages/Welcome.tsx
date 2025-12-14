@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MapPin, ChevronDown, Github } from "lucide-react";
+import { MapPin, ChevronDown, Github, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { ProfileCard } from "@/components/ProfileCard";
 import { TechStackMarquee } from "@/components/TechStackMarquee";
 import { CertificatesSection } from "@/components/sections/CertificatesSection";
@@ -8,6 +8,15 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import photo1 from "@/assets/1.jpg";
 import photo2 from "@/assets/2.jpg";
 import photo3 from "@/assets/3.jpg";
+import j1 from "@/assets/journal/j_1.jpg";
+import j2 from "@/assets/journal/j_2.jpg";
+import j3 from "@/assets/journal/j_3.jpg";
+import j4 from "@/assets/journal/j_4.jpg";
+import j5 from "@/assets/journal/j_5.jpg";
+import j6 from "@/assets/journal/j_6.jpg";
+import j7 from "@/assets/journal/j_7.jpg";
+import j8 from "@/assets/journal/j_8.jpg";
+import j9 from "@/assets/journal/j_9.jpg";
 
 const locations = [
   {
@@ -304,8 +313,42 @@ function DestinationsSection({
   );
 }
 
+const journalPages = [
+  { id: 1, label: "Page 1", title: "LEARNING JOURNAL", image: j1 },
+  { id: 2, label: "Page 2", title: "ITINERARY", image: j2 },
+  { id: 3, label: "Page 3", title: "GENERAL HOUSE RULES", image: j3 },
+  { id: 4, label: "Page 4", title: "WORLDTECH INFORMATION SOLUTIONS", image: j4 },
+  { id: 5, label: "Page 5", title: "RIVAN IT CEBU", image: j5 },
+  { id: 6, label: "Page 6", title: "CODECHUM", image: j6 },
+  { id: 7, label: "Page 7", title: "MATA TECHNOLOGIES INC.", image: j7 },
+  { id: 8, label: "Page 8", title: "T.A.R.S.I.E.R. 117", image: j8 },
+  { id: 9, label: "Page 9", title: "IMPRESSION SHEET", image: j9 },
+];
+
 function JournalSection() {
   const { ref, isVisible } = useScrollAnimation();
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const openCarousel = (idx: number) => {
+    setCurrentIndex(idx);
+    setIsOpen(true);
+  };
+
+  const goToPrevious = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex(prev => prev === 0 ? journalPages.length - 1 : prev - 1);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const goToNext = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex(prev => prev === journalPages.length - 1 ? 0 : prev + 1);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
 
   return (
     <section id="journal" className="py-24 bg-background">
@@ -315,7 +358,7 @@ function JournalSection() {
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
         }`}
       >
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <p className="text-primary font-medium tracking-wide uppercase text-sm mb-4">
             Academic Documentation
           </p>
@@ -326,35 +369,159 @@ function JournalSection() {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-card border border-border rounded-xl p-6 md:p-8 hover:shadow-lg transition-all duration-400">
-            <div className="flex flex-col sm:flex-row items-start gap-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-secondary rounded-lg flex items-center justify-center shrink-0">
-                <svg
-                  className="w-6 h-6 sm:w-7 sm:h-7 text-secondary-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+        {/* Deck of Cards - All 9 pages */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {journalPages.map((page, idx) => (
+              <button
+                key={page.id}
+                onClick={() => openCarousel(idx)}
+                className="group relative bg-card border-2 border-border rounded-lg overflow-hidden hover:shadow-xl hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 animate-fade-in-up opacity-0"
+                style={{ animationDelay: `${idx * 50}ms`, animationFillMode: "forwards" }}
+                aria-label={`${page.label}: ${page.title}`}
+              >
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <img
+                    src={page.image}
+                    alt={page.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif text-lg sm:text-xl mb-2">Educational Tour 2025 Journal</h3>
-                <p className="text-muted-foreground text-sm">
-                  Complete documentation of the tour experience including daily activities, 
-                  company visits, and personal reflections.
-                </p>
-              </div>
-            </div>
+                  {/* Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <span className="inline-block px-2 py-1 bg-primary/90 text-primary-foreground text-xs font-medium rounded mb-2">
+                        {page.label}
+                      </span>
+                      <h3 className="font-serif text-white text-sm sm:text-base line-clamp-2">
+                        {page.title}
+                      </h3>
+                    </div>
+                  </div>
+                  {/* Click indicator */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-3 transform scale-90 group-hover:scale-100 transition-transform duration-300">
+                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                {/* Card Label - Always visible */}
+                <div className="p-3 bg-card">
+                  <span className="text-xs font-medium text-muted-foreground">{page.label}</span>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* Journal Fullscreen Modal with enhanced transitions */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-300"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsOpen(false);
+          }}
+        >
+          <div className="bg-card rounded-xl max-w-6xl w-full max-h-[95vh] overflow-hidden flex flex-col shadow-2xl transform animate-in zoom-in-95 duration-300">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-border bg-background/95 backdrop-blur-sm">
+              <div className="animate-in slide-in-from-left duration-300">
+                <h2 className="font-serif text-2xl mb-1">{journalPages[currentIndex].title}</h2>
+                <p className="text-sm text-muted-foreground">{journalPages[currentIndex].label}</p>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 hover:bg-muted rounded-lg transition-all duration-300 hover:scale-110 active:scale-95"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Carousel Content with fade transition */}
+            <div className="flex-1 flex items-center justify-center bg-muted/50 overflow-auto relative">
+              {/* Carousel Container */}
+              <div 
+                className="flex transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] h-full"
+                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              >
+                {journalPages.map((page, idx) => (
+                  <div key={page.id} className="min-w-full flex-shrink-0 flex items-center justify-center p-4 h-full">
+                    <img 
+                      src={page.image} 
+                      alt={page.title}
+                      className="h-full w-auto object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Navigation Arrows inside modal */}
+              <button
+                onClick={goToPrevious}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full text-white transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg"
+                aria-label="Previous page"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={goToNext}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-full text-white transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg"
+                aria-label="Next page"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Navigation with enhanced effects */}
+            <div className="flex items-center justify-between p-6 border-t border-border bg-background/95 backdrop-blur-sm">
+              <button
+                onClick={goToPrevious}
+                className="flex items-center gap-2 px-4 py-2 hover:bg-muted rounded-lg transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                Previous
+              </button>
+
+              <div className="text-sm text-muted-foreground font-medium">
+                {currentIndex + 1} / {journalPages.length}
+              </div>
+
+              <button
+                onClick={goToNext}
+                className="flex items-center gap-2 px-4 py-2 hover:bg-muted rounded-lg transition-all duration-300 hover:scale-105 active:scale-95"
+              >
+                Next
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Page Indicators */}
+            <div className="px-6 pb-6 flex flex-wrap gap-2 justify-center bg-background/95 backdrop-blur-sm">
+              {journalPages.map((page, idx) => (
+                <button
+                  key={page.id}
+                  onClick={() => {
+                    if (!isTransitioning && idx !== currentIndex) {
+                      setIsTransitioning(true);
+                      setCurrentIndex(idx);
+                      setTimeout(() => setIsTransitioning(false), 500);
+                    }
+                  }}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                    idx === currentIndex
+                      ? "bg-primary text-primary-foreground scale-110 shadow-lg"
+                      : "bg-muted text-muted-foreground hover:bg-muted/80 hover:scale-105"
+                  }`}
+                >
+                  {page.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
