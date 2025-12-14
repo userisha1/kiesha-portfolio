@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { MapPin, ChevronDown, Github } from "lucide-react";
 import { ProfileCard } from "@/components/ProfileCard";
 import { TechStackMarquee } from "@/components/TechStackMarquee";
+import { CertificatesSection } from "@/components/sections/CertificatesSection";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import photo1 from "@/assets/1.jpg";
 import photo2 from "@/assets/2.jpg";
@@ -109,6 +110,9 @@ export default function Welcome() {
 
       {/* Destinations Section */}
       <DestinationsSection handleLocationSelect={handleLocationSelect} hoveredLocation={hoveredLocation} setHoveredLocation={setHoveredLocation} />
+
+      {/* Certificates Section */}
+      <CertificatesSection />
 
       {/* Journal Section */}
       <JournalSection />

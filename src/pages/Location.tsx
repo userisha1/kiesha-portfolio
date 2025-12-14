@@ -13,9 +13,10 @@ const locationData = {
     duration: "3 Days, 1 Night",
     description: "Exploring the vibrant culture, tech industry, and beautiful landscapes of Cebu City during our educational tour.",
     companies: [
-      { name: "Tech Company A", description: "Software development firm" },
-      { name: "BPO Center", description: "Business process outsourcing" },
-      { name: "Startup Hub", description: "Innovation center" },
+      { name: "WORLDTECH INFORMATION SOLUTIONS", description: "Day 1 - IT consultancy and training company" },
+      { name: "RIVAN IT", description: "Day 2 - IT and networking certification training center" },
+      { name: "CIT-U", description: "Day 2 - CodeChum venue at Wildcat Innovation Labs" },
+      { name: "MATA TECHNOLOGIES INC.", description: "Day 3 - Virtual tours and VR map provider" },
     ],
   },
   bohol: {
@@ -24,8 +25,7 @@ const locationData = {
     duration: "1 Day",
     description: "Discovering the natural wonders and rich heritage of Bohol province.",
     companies: [
-      { name: "Eco Tourism Center", description: "Sustainable tourism" },
-      { name: "Local Enterprise", description: "Community business" },
+      { name: "TAGBILARAN 911 (TARSIER)", description: "Day 4 - Emergency response and disaster management unit" },
     ],
   },
 };

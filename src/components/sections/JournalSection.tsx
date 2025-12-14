@@ -2,13 +2,26 @@ import { useState } from "react";
 import { BookOpen } from "lucide-react";
 import { Lightbox } from "@/components/Lightbox";
 
+import j_1 from "@/assets/journal/j_1.JPG";
+import j_2 from "@/assets/journal/j_2.JPG";
+import j_3 from "@/assets/journal/j_3.JPG";
+import j_4 from "@/assets/journal/j_4.JPG";
+import j_5 from "@/assets/journal/j_5.JPG";
+import j_6 from "@/assets/journal/j_6.JPG";
+import j_7 from "@/assets/journal/j_7.JPG";
+import j_8 from "@/assets/journal/j_8.JPG";
+import j_9 from "@/assets/journal/j_9.JPG";
+
 const journalEntries = [
-  { id: 1, label: "Week 1", title: "Orientation & Onboarding", pages: "1-5" },
-  { id: 2, label: "Week 2", title: "Learning the Systems", pages: "6-10" },
-  { id: 3, label: "Week 3", title: "First Project Assignment", pages: "11-15" },
-  { id: 4, label: "Week 4", title: "Team Collaboration", pages: "16-20" },
-  { id: 5, label: "Week 5", title: "Independent Tasks", pages: "21-25" },
-  { id: 6, label: "Week 6", title: "Final Presentation", pages: "26-30" },
+  { id: 1, label: "Page 1", title: "WORLDTECH INFORMATION SOLUTIONS", image: j_1 },
+  { id: 2, label: "Page 2", title: "RIVAN IT CEBU", image: j_2 },
+  { id: 3, label: "Page 3", title: "CODECHUM", image: j_3 },
+  { id: 4, label: "Page 4", title: "MATA TECHNOLOGIES INC.", image: j_4 },
+  { id: 5, label: "Page 5", title: "T.A.R.S.I.E.R. 117", image: j_5 },
+  { id: 6, label: "Page 6", title: "Journal Entry", image: j_6 },
+  { id: 7, label: "Page 7", title: "Journal Entry", image: j_7 },
+  { id: 8, label: "Page 8", title: "Journal Entry", image: j_8 },
+  { id: 9, label: "Page 9", title: "Journal Entry", image: j_9 },
 ];
 
 export function JournalSection() {
@@ -21,10 +34,10 @@ export function JournalSection() {
           <p className="text-primary font-medium tracking-wide uppercase text-sm mb-4">
             Academic Documentation
           </p>
-          <h2 className="section-heading mb-4">Internship Journal</h2>
+          <h2 className="section-heading mb-4">Tour Journal</h2>
           <p className="section-subheading max-w-2xl mx-auto">
             A comprehensive record of daily activities, learnings, and reflections 
-            throughout my internship experience.
+            throughout the educational tour experience.
           </p>
         </div>
 
@@ -47,7 +60,6 @@ export function JournalSection() {
                   <h3 className="font-serif text-lg mb-1 group-hover:text-primary transition-colors duration-300">
                     {entry.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm">Pages {entry.pages}</p>
                 </div>
               </div>
               
@@ -63,7 +75,7 @@ export function JournalSection() {
       <Lightbox
         isOpen={!!selectedEntry}
         onClose={() => setSelectedEntry(null)}
-        imageSrc=""
+        imageSrc={selectedEntry?.image || ""}
         title={selectedEntry ? `${selectedEntry.label}: ${selectedEntry.title}` : undefined}
       />
     </section>

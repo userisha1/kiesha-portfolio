@@ -1,28 +1,66 @@
 import { useState } from "react";
 import { DayGallery } from "@/components/DayGallery";
 
-import galleryDay1 from "@/assets/gallery-day1.jpg";
-import galleryDay2 from "@/assets/gallery-day2.jpg";
-import galleryDay3 from "@/assets/gallery-day3.jpg";
-import galleryDay4 from "@/assets/gallery-day4.jpg";
 import coverDay1 from "@/assets/covers/cover_day1.jpg";
 import coverDay2 from "@/assets/covers/cover_day2.jpg";
 import coverDay3 from "@/assets/covers/cover_day3.jpg";
 import coverDay4 from "@/assets/covers/cover_day4.jpg";
 
+// Day 1 images
+import d1_1 from "@/assets/day1/d1_1.png";
+import d1_2 from "@/assets/day1/d1_2.png";
+import d1_3 from "@/assets/day1/d1_3.png";
+import d1_4 from "@/assets/day1/d1_4.png";
+import d1_5 from "@/assets/day1/d1_5.png";
+import d1_6 from "@/assets/day1/d1_6.png";
+import d1_7 from "@/assets/day1/d1_7.png";
+import d1_8 from "@/assets/day1/d1_8.png";
+import d1_9 from "@/assets/day1/d1_9.png";
+import d1_10 from "@/assets/day1/d1_10.png";
+
+// Day 2 images
+import d2_1 from "@/assets/day2/d2_1.png";
+import d2_2 from "@/assets/day2/d2_2.png";
+import d2_3 from "@/assets/day2/d2_3.png";
+import d2_4 from "@/assets/day2/d2_4.png";
+import d2_5 from "@/assets/day2/d2_5.png";
+import d2_6 from "@/assets/day2/d2_6.png";
+import d2_7 from "@/assets/day2/d2_7.png";
+import d2_8 from "@/assets/day2/d2_8.png";
+import d2_9 from "@/assets/day2/d2_9.png";
+import d2_10 from "@/assets/day2/d2_10.png";
+
+// Day 3 images
+import d3_1 from "@/assets/day3/d3_1.png";
+import d3_2 from "@/assets/day3/d3_2.png";
+import d3_3 from "@/assets/day3/d3_3.png";
+import d3_4 from "@/assets/day3/d3_4.png";
+import d3_5 from "@/assets/day3/d3_5.png";
+import d3_6 from "@/assets/day3/d3_6.png";
+import d3_7 from "@/assets/day3/d3_7.png";
+import d3_8 from "@/assets/day3/d3_8.png";
+import d3_9 from "@/assets/day3/d3_9.png";
+import d3_10 from "@/assets/day3/d3_10.png";
+import d3_11 from "@/assets/day3/d3_11.png";
+import d3_12 from "@/assets/day3/d3_12.png";
+import d3_13 from "@/assets/day3/d3_13.png";
+
+// Day 4 images
+import d4_1 from "@/assets/day4/d4_1.png";
+import d4_2 from "@/assets/day4/d4_2.png";
+import d4_3 from "@/assets/day4/d4_3.png";
+import d4_4 from "@/assets/day4/d4_4.png";
+import d4_5 from "@/assets/day4/d4_5.png";
+import d4_6 from "@/assets/day4/d4_6.png";
+import d4_7 from "@/assets/day4/d4_7.png";
+import d4_8 from "@/assets/day4/d4_8.png";
+import d4_9 from "@/assets/day4/d4_9.png";
+import d4_10 from "@/assets/day4/d4_10.png";
+import d4_11 from "@/assets/day4/d4_11.png";
+
 interface PhotoCarouselProps {
   locationId: string;
 }
-
-// Generate placeholder photos for each day (max 10)
-const generateDayPhotos = (dayNumber: number, count: number) => {
-  const baseImages = [galleryDay1, galleryDay2, galleryDay3, galleryDay4];
-  return Array.from({ length: count }, (_, i) => ({
-    id: i + 1,
-    src: baseImages[i % baseImages.length],
-    alt: `Day ${dayNumber} - Photo ${i + 1}`,
-  }));
-};
 
 const dayData = {
   cebu: [
@@ -30,19 +68,55 @@ const dayData = {
       id: 1,
       label: "Day 1",
       coverImage: coverDay1,
-      photos: generateDayPhotos(1, 10),
+      photos: [
+        { id: 1, src: d1_1, alt: "Day 1 - Photo 1" },
+        { id: 2, src: d1_2, alt: "Day 1 - Photo 2" },
+        { id: 3, src: d1_3, alt: "Day 1 - Photo 3" },
+        { id: 4, src: d1_4, alt: "Day 1 - Photo 4" },
+        { id: 5, src: d1_5, alt: "Day 1 - Photo 5" },
+        { id: 6, src: d1_6, alt: "Day 1 - Photo 6" },
+        { id: 7, src: d1_7, alt: "Day 1 - Photo 7" },
+        { id: 8, src: d1_8, alt: "Day 1 - Photo 8" },
+        { id: 9, src: d1_9, alt: "Day 1 - Photo 9" },
+        { id: 10, src: d1_10, alt: "Day 1 - Photo 10" },
+      ],
     },
     {
       id: 2,
       label: "Day 2",
       coverImage: coverDay2,
-      photos: generateDayPhotos(2, 10),
+      photos: [
+        { id: 1, src: d2_1, alt: "Day 2 - Photo 1" },
+        { id: 2, src: d2_2, alt: "Day 2 - Photo 2" },
+        { id: 3, src: d2_3, alt: "Day 2 - Photo 3" },
+        { id: 4, src: d2_4, alt: "Day 2 - Photo 4" },
+        { id: 5, src: d2_5, alt: "Day 2 - Photo 5" },
+        { id: 6, src: d2_6, alt: "Day 2 - Photo 6" },
+        { id: 7, src: d2_7, alt: "Day 2 - Photo 7" },
+        { id: 8, src: d2_8, alt: "Day 2 - Photo 8" },
+        { id: 9, src: d2_9, alt: "Day 2 - Photo 9" },
+        { id: 10, src: d2_10, alt: "Day 2 - Photo 10" },
+      ],
     },
     {
       id: 3,
       label: "Day 3",
       coverImage: coverDay3,
-      photos: generateDayPhotos(3, 10),
+      photos: [
+        { id: 1, src: d3_1, alt: "Day 3 - Photo 1" },
+        { id: 2, src: d3_2, alt: "Day 3 - Photo 2" },
+        { id: 3, src: d3_3, alt: "Day 3 - Photo 3" },
+        { id: 4, src: d3_4, alt: "Day 3 - Photo 4" },
+        { id: 5, src: d3_5, alt: "Day 3 - Photo 5" },
+        { id: 6, src: d3_6, alt: "Day 3 - Photo 6" },
+        { id: 7, src: d3_7, alt: "Day 3 - Photo 7" },
+        { id: 8, src: d3_8, alt: "Day 3 - Photo 8" },
+        { id: 9, src: d3_9, alt: "Day 3 - Photo 9" },
+        { id: 10, src: d3_10, alt: "Day 3 - Photo 10" },
+        { id: 11, src: d3_11, alt: "Day 3 - Photo 11" },
+        { id: 12, src: d3_12, alt: "Day 3 - Photo 12" },
+        { id: 13, src: d3_13, alt: "Day 3 - Photo 13" },
+      ],
     },
   ],
   bohol: [
@@ -50,7 +124,19 @@ const dayData = {
       id: 4,
       label: "Day 4",
       coverImage: coverDay4,
-      photos: generateDayPhotos(4, 10),
+      photos: [
+        { id: 1, src: d4_1, alt: "Day 4 - Photo 1" },
+        { id: 2, src: d4_2, alt: "Day 4 - Photo 2" },
+        { id: 3, src: d4_3, alt: "Day 4 - Photo 3" },
+        { id: 4, src: d4_4, alt: "Day 4 - Photo 4" },
+        { id: 5, src: d4_5, alt: "Day 4 - Photo 5" },
+        { id: 6, src: d4_6, alt: "Day 4 - Photo 6" },
+        { id: 7, src: d4_7, alt: "Day 4 - Photo 7" },
+        { id: 8, src: d4_8, alt: "Day 4 - Photo 8" },
+        { id: 9, src: d4_9, alt: "Day 4 - Photo 9" },
+        { id: 10, src: d4_10, alt: "Day 4 - Photo 10" },
+        { id: 11, src: d4_11, alt: "Day 4 - Photo 11" },
+      ],
     },
   ],
 };
