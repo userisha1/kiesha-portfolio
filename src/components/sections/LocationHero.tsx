@@ -1,20 +1,24 @@
 import { MapPin, Calendar, Clock } from "lucide-react";
 import heroCebu from "@/assets/hero-cebu.jpg";
+import heroBohol from "@/assets/hero-bohol.jpg";
 
 interface LocationHeroProps {
   name: string;
   tagline: string;
   duration: string;
   description: string;
+  locationId?: string;
 }
 
-export function LocationHero({ name, tagline, duration, description }: LocationHeroProps) {
+export function LocationHero({ name, tagline, duration, description, locationId }: LocationHeroProps) {
+  const heroImage = locationId === "bohol" ? heroBohol : heroCebu;
+
   return (
     <section className="relative min-h-[70vh] flex items-center pt-24 pb-16 overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
         <img
-          src={heroCebu}
+          src={heroImage}
           alt={`Welcome to ${name}`}
           className="w-full h-full object-cover"
         />

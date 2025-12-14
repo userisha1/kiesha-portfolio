@@ -90,6 +90,7 @@ export default function Location() {
           tagline={location.tagline}
           duration={location.duration}
           description={location.description}
+          locationId={locationId}
         />
         {locationId && (
           <>

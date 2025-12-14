@@ -5,6 +5,10 @@ import galleryDay1 from "@/assets/gallery-day1.jpg";
 import galleryDay2 from "@/assets/gallery-day2.jpg";
 import galleryDay3 from "@/assets/gallery-day3.jpg";
 import galleryDay4 from "@/assets/gallery-day4.jpg";
+import coverDay1 from "@/assets/covers/cover_day1.jpg";
+import coverDay2 from "@/assets/covers/cover_day2.jpg";
+import coverDay3 from "@/assets/covers/cover_day3.jpg";
+import coverDay4 from "@/assets/covers/cover_day4.jpg";
 
 interface PhotoCarouselProps {
   locationId: string;
@@ -25,19 +29,19 @@ const dayData = {
     {
       id: 1,
       label: "Day 1",
-      coverImage: galleryDay1,
+      coverImage: coverDay1,
       photos: generateDayPhotos(1, 10),
     },
     {
       id: 2,
       label: "Day 2",
-      coverImage: galleryDay2,
+      coverImage: coverDay2,
       photos: generateDayPhotos(2, 10),
     },
     {
       id: 3,
       label: "Day 3",
-      coverImage: galleryDay3,
+      coverImage: coverDay3,
       photos: generateDayPhotos(3, 10),
     },
   ],
@@ -45,7 +49,7 @@ const dayData = {
     {
       id: 4,
       label: "Day 4",
-      coverImage: galleryDay4,
+      coverImage: coverDay4,
       photos: generateDayPhotos(4, 10),
     },
   ],
