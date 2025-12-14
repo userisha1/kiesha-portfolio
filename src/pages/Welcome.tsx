@@ -8,15 +8,15 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import photo1 from "@/assets/1.jpg";
 import photo2 from "@/assets/2.jpg";
 import photo3 from "@/assets/3.jpg";
-import j1 from "@/assets/journal/j_1.jpg";
-import j2 from "@/assets/journal/j_2.jpg";
-import j3 from "@/assets/journal/j_3.jpg";
-import j4 from "@/assets/journal/j_4.jpg";
-import j5 from "@/assets/journal/j_5.jpg";
-import j6 from "@/assets/journal/j_6.jpg";
-import j7 from "@/assets/journal/j_7.jpg";
-import j8 from "@/assets/journal/j_8.jpg";
-import j9 from "@/assets/journal/j_9.jpg";
+import j1 from "@/assets/journal/j_1.JPG";
+import j2 from "@/assets/journal/j_2.JPG";
+import j3 from "@/assets/journal/j_3.JPG";
+import j4 from "@/assets/journal/j_4.JPG";
+import j5 from "@/assets/journal/j_5.JPG";
+import j6 from "@/assets/journal/j_6.JPG";
+import j7 from "@/assets/journal/j_7.JPG";
+import j8 from "@/assets/journal/j_8.JPG";
+import j9 from "@/assets/journal/j_9.JPG";
 
 const locations = [
   {
