@@ -443,7 +443,7 @@ function JournalSection() {
             <div className="flex-1 flex items-center justify-center bg-muted/50 overflow-auto relative">
               {/* Carousel Container */}
               <div 
-                className="flex transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] h-full"
+                className="flex transition-transform duration-700 ease-in-out h-full"
                 style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
                 {journalPages.map((page, idx) => (

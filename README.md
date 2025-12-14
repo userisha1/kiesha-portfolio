@@ -1,73 +1,81 @@
-# Welcome to your Lovable project
+# Kiesha's Digital Canvas
 
-## Project info
+Educational Tour Documentation Portfolio - A beautiful showcase of the Cebu-Bohol Educational Tour experience.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Deployment to Vercel
 
-## How can I edit this code?
+### Option 1: Deploy via Vercel Dashboard (Recommended)
 
-There are several ways of editing your application.
+1. **Push your code to GitHub**
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git branch -M main
+   git remote add origin <your-github-repo-url>
+   git push -u origin main
+   ```
 
-**Use Lovable**
+2. **Deploy to Vercel**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign in with your GitHub account
+   - Click "Add New Project"
+   - Import your GitHub repository
+   - Vercel will auto-detect Vite settings
+   - Click "Deploy"
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+   That's it! Your site will be live in minutes.
 
-Changes made via Lovable will be committed automatically to this repo.
+### Option 2: Deploy via Vercel CLI
 
-**Use your preferred IDE**
+1. **Install Vercel CLI**
+   ```bash
+   npm i -g vercel
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+2. **Login to Vercel**
+   ```bash
+   vercel login
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. **Deploy**
+   ```bash
+   vercel
+   ```
 
-Follow these steps:
+4. **For production deployment**
+   ```bash
+   vercel --prod
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 📦 Build
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+```bash
+npm install
+npm run build
+```
 
-# Step 3: Install the necessary dependencies.
-npm i
+The build output will be in the `dist` folder.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## 🛠️ Development
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 📝 Notes
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- The project uses React Router for client-side routing
+- All routes are configured to serve `index.html` (SPA mode)
+- Journal images are optimized and loaded from assets
+- The site is fully responsive and works on all devices
 
-**Use GitHub Codespaces**
+## 🎨 Features
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- Interactive journal carousel
+- Photo galleries for each day
+- Company visit documentation
+- Certificate showcase
+- Responsive design
+- Smooth animations and transitions
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
