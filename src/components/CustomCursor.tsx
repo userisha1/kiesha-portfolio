@@ -6,13 +6,26 @@ interface TrailPoint {
   id: number;
 }
 
+interface Sparkle {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  opacity: number;
+}
+
 export function CustomCursor() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [trail, setTrail] = useState<TrailPoint[]>([]);
+  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
   const trailIdRef = useRef(0);
+  const sparkleIdRef = useRef(0);
   const animationFrameRef = useRef<number>();
+  const targetPosition = useRef({ x: 0, y: 0 });
+  const lastPosition = useRef({ x: 0, y: 0 });
+  const isInitialized = useRef(false);
 
   useEffect(() => {
     // Only show custom cursor on desktop devices
@@ -20,20 +33,45 @@ export function CustomCursor() {
     if (!isDesktop) return;
 
     const updateCursor = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      const newX = e.clientX;
+      const newY = e.clientY;
+      
+      lastPosition.current = { x: newX, y: newY };
+      targetPosition.current = { x: newX, y: newY };
+      
+      // Initialize cursor position immediately on first move
+      if (!isInitialized.current) {
+        setCursorPosition({ x: newX, y: newY });
+        isInitialized.current = true;
+      }
+      
       setIsVisible(true);
       
-      // Add to trail
+      // Add to trail with delay
       const newPoint: TrailPoint = {
-        x: e.clientX,
-        y: e.clientY,
+        x: newX,
+        y: newY,
         id: trailIdRef.current++,
       };
       
       setTrail((prev) => {
-        const updated = [...prev, newPoint].slice(-12); // Keep last 12 points
+        const updated = [...prev, newPoint].slice(-15); // Keep last 15 points
         return updated;
       });
+
+      // Add sparkle randomly
+      if (Math.random() > 0.7) {
+        setSparkles((prev) => [
+          ...prev,
+          {
+            id: sparkleIdRef.current++,
+            x: newX + (Math.random() - 0.5) * 20,
+            y: newY + (Math.random() - 0.5) * 20,
+            size: Math.random() * 4 + 2,
+            opacity: 1,
+          },
+        ]);
+      }
     };
 
     const cleanupTrail = () => {
@@ -54,9 +92,47 @@ export function CustomCursor() {
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
+    // Smooth cursor movement with gravity effect
+    const animateCursor = () => {
+      setCursorPosition((prev) => {
+        const target = targetPosition.current;
+        const dx = target.x - prev.x;
+        const dy = target.y - prev.y;
+        
+        // If cursor hasn't moved much, snap to position for better responsiveness
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 0.5) {
+          return target;
+        }
+        
+        // Apply gravity/damping with smooth interpolation
+        const newX = prev.x + dx * 0.2; // Increased from 0.15 for better responsiveness
+        const newY = prev.y + dy * 0.2;
+        
+        return { x: newX, y: newY };
+      });
+      
+      animationFrameRef.current = requestAnimationFrame(animateCursor);
+    };
+    
+    animateCursor();
+
+    // Update sparkles
+    const sparkleInterval = setInterval(() => {
+      setSparkles((prev) =>
+        prev
+          .map((sparkle) => ({
+            ...sparkle,
+            opacity: sparkle.opacity - 0.05,
+          }))
+          .filter((sparkle) => sparkle.opacity > 0)
+      );
+    }, 50);
+
     const handleMouseLeave = () => {
       setIsVisible(false);
       setTrail([]);
+      setSparkles([]);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -92,6 +168,7 @@ export function CustomCursor() {
         el.removeEventListener("mouseleave", handleInteractiveLeave);
       });
       clearInterval(trailInterval);
+      clearInterval(sparkleInterval);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -109,8 +186,8 @@ export function CustomCursor() {
     <>
       {/* Trail */}
       {trail.map((point, index) => {
-        const opacity = (index + 1) / trail.length * 0.6;
-        const size = 6 + (index * 0.3);
+        const opacity = (index + 1) / trail.length * 0.5;
+        const size = 4 + (index * 0.2);
         
         return (
           <div
@@ -126,20 +203,35 @@ export function CustomCursor() {
           />
         );
       })}
+
+      {/* Sparkles */}
+      {sparkles.map((sparkle) => (
+        <div
+          key={sparkle.id}
+          className="custom-cursor-sparkle"
+          style={{
+            left: `${sparkle.x}px`,
+            top: `${sparkle.y}px`,
+            width: `${sparkle.size}px`,
+            height: `${sparkle.size}px`,
+            opacity: sparkle.opacity,
+          }}
+        />
+      ))}
       
-      {/* Main cursor */}
+      {/* Main cursor - visible ring with dot */}
       <div
-        className={`custom-cursor ${isHovering ? "hover" : ""}`}
+        className={`custom-cursor-main ${isHovering ? "hover" : ""}`}
         style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
         }}
       />
       <div
-        className="custom-cursor-dot"
+        className="custom-cursor-center"
         style={{
-          left: `${position.x}px`,
-          top: `${position.y}px`,
+          left: `${cursorPosition.x}px`,
+          top: `${cursorPosition.y}px`,
         }}
       />
     </>

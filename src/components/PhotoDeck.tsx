@@ -97,4 +97,3 @@ export function PhotoDeck({ photos, isOpen, onClose }: PhotoDeckProps) {
   );
 }
 
-

@@ -26,6 +26,27 @@ export function DayGallery({ isOpen, onClose, days, initialDayIndex = 0 }: DayGa
   const [currentDayIndex, setCurrentDayIndex] = useState(initialDayIndex);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
+  const currentDay = days[currentDayIndex];
+  const currentPhoto = currentDay?.photos[currentPhotoIndex];
+
+  const handlePreviousPhoto = useCallback(() => {
+    if (currentPhotoIndex > 0) {
+      setCurrentPhotoIndex(currentPhotoIndex - 1);
+    } else if (currentDayIndex > 0) {
+      setCurrentDayIndex(currentDayIndex - 1);
+      setCurrentPhotoIndex(days[currentDayIndex - 1].photos.length - 1);
+    }
+  }, [currentDayIndex, currentPhotoIndex, days]);
+
+  const handleNextPhoto = useCallback(() => {
+    if (currentDay && currentPhotoIndex < currentDay.photos.length - 1) {
+      setCurrentPhotoIndex(currentPhotoIndex + 1);
+    } else if (currentDayIndex < days.length - 1) {
+      setCurrentDayIndex(currentDayIndex + 1);
+      setCurrentPhotoIndex(0);
+    }
+  }, [currentDay, currentDayIndex, currentPhotoIndex, days]);
+
   useEffect(() => {
     if (isOpen) {
       setCurrentDayIndex(initialDayIndex);
@@ -59,27 +80,6 @@ export function DayGallery({ isOpen, onClose, days, initialDayIndex = 0 }: DayGa
       window.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, onClose, handlePreviousPhoto, handleNextPhoto]);
-
-  const currentDay = days[currentDayIndex];
-  const currentPhoto = currentDay?.photos[currentPhotoIndex];
-
-  const handlePreviousPhoto = useCallback(() => {
-    if (currentPhotoIndex > 0) {
-      setCurrentPhotoIndex(currentPhotoIndex - 1);
-    } else if (currentDayIndex > 0) {
-      setCurrentDayIndex(currentDayIndex - 1);
-      setCurrentPhotoIndex(days[currentDayIndex - 1].photos.length - 1);
-    }
-  }, [currentDayIndex, currentPhotoIndex, days]);
-
-  const handleNextPhoto = useCallback(() => {
-    if (currentDay && currentPhotoIndex < currentDay.photos.length - 1) {
-      setCurrentPhotoIndex(currentPhotoIndex + 1);
-    } else if (currentDayIndex < days.length - 1) {
-      setCurrentDayIndex(currentDayIndex + 1);
-      setCurrentPhotoIndex(0);
-    }
-  }, [currentDay, currentDayIndex, currentPhotoIndex, days]);
 
   const handlePreviousDay = () => {
     if (currentDayIndex > 0) {

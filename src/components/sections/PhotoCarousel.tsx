@@ -52,7 +52,13 @@ const dayData = {
 };
 
 export function PhotoCarousel({ locationId }: PhotoCarouselProps) {
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PhotoCarousel.tsx:component',message:'PhotoCarousel mounted',data:{locationId,availableKeys:Object.keys(dayData)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+  // #endregion
   const days = dayData[locationId as keyof typeof dayData] || [];
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PhotoCarousel.tsx:component',message:'Days data lookup',data:{locationId,daysFound:days.length,dayKeys:Object.keys(dayData)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+  // #endregion
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
 
   return (

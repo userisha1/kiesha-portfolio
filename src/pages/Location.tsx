@@ -32,32 +32,57 @@ const locationData = {
 
 export default function Location() {
   const { locationId } = useParams<{ locationId: string }>();
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:component',message:'Component mounted',data:{locationId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+  // #endregion
   const navigate = useNavigate();
-  const [isEntering, setIsEntering] = useState(true);
 
   const location = locationId && locationData[locationId as keyof typeof locationData];
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:component',message:'Location lookup result',data:{locationId,locationFound:!!location,locationKeys:Object.keys(locationData)},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'E'})}).catch(()=>{});
+  // #endregion
 
   useEffect(() => {
-    if (!location) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:useEffect',message:'Effect running',data:{locationId},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+    if (!locationId) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:useEffect',message:'No locationId - redirecting',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'A'})}).catch(()=>{});
+      // #endregion
       navigate("/");
       return;
     }
     
+    const foundLocation = locationData[locationId as keyof typeof locationData];
+    if (!foundLocation) {
+      // #region agent log
+      fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:useEffect',message:'Location not found - redirecting',data:{locationId,availableKeys:Object.keys(locationData)},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'E'})}).catch(()=>{});
+      // #endregion
+      navigate("/");
+      return;
+    }
+    
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:useEffect',message:'Location valid - proceeding',data:{locationId,locationName:foundLocation.name},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
     // Scroll to top when location changes
     window.scrollTo(0, 0);
-    
-    const timer = setTimeout(() => setIsEntering(false), 100);
-    return () => clearTimeout(timer);
-  }, [location, navigate]);
+  }, [locationId, navigate]);
 
-  if (!location) return null;
+  if (!location) {
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:render',message:'No location - returning null',data:{locationId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+    // #endregion
+    return null;
+  }
+
+  // #region agent log
+  fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:render',message:'Rendering Location component',data:{locationId,locationName:location.name},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+  // #endregion
 
   return (
-    <div
-      className={`min-h-screen transition-all duration-700 ${
-        isEntering ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0"
-      }`}
-    >
+    <div className="min-h-screen">
       <LocationNavigation currentLocation={locationId!} />
       <main>
         <LocationHero
@@ -66,7 +91,23 @@ export default function Location() {
           duration={location.duration}
           description={location.description}
         />
-        <PhotoCarousel locationId={locationId!} />
+        {locationId && (
+          <>
+            {/* #region agent log */}
+            {(() => {
+              fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:render',message:'Before PhotoCarousel render',data:{locationId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+              return null;
+            })()}
+            {/* #endregion */}
+            <PhotoCarousel locationId={locationId} />
+            {/* #region agent log */}
+            {(() => {
+              fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Location.tsx:render',message:'After PhotoCarousel render',data:{locationId},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+              return null;
+            })()}
+            {/* #endregion */}
+          </>
+        )}
         <LocationCompanies companies={location.companies} locationName={location.name} />
       </main>
       <Footer />
