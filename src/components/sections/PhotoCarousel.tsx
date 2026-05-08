@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ArrowRight, Images } from "lucide-react";
 import { DayGallery } from "@/components/DayGallery";
 
 import coverDay1 from "@/assets/covers/cover_day1.jpg";
@@ -142,34 +143,29 @@ const dayData = {
 };
 
 export function PhotoCarousel({ locationId }: PhotoCarouselProps) {
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PhotoCarousel.tsx:component',message:'PhotoCarousel mounted',data:{locationId,availableKeys:Object.keys(dayData)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-  // #endregion
   const days = dayData[locationId as keyof typeof dayData] || [];
-  // #region agent log
-  fetch('http://127.0.0.1:7242/ingest/d72131fa-a57c-4677-ad61-c191e6f6ace4',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'PhotoCarousel.tsx:component',message:'Days data lookup',data:{locationId,daysFound:days.length,dayKeys:Object.keys(dayData)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-  // #endregion
   const [selectedDayIndex, setSelectedDayIndex] = useState<number | null>(null);
 
   return (
-    <section id="gallery" className="py-24 bg-card">
-      <div className="container mx-auto px-6">
+    <section id="gallery" className="relative overflow-hidden bg-card/80 py-24">
+      <div className="absolute left-0 top-24 h-72 w-1/3 rounded-r-full bg-primary/10 blur-3xl" />
+      <div className="container mx-auto min-w-0 px-6">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 min-w-0">
           <p
-            className="text-primary font-medium tracking-wide uppercase text-sm mb-4 animate-fade-in-up opacity-0"
+            className="text-primary font-medium tracking-wide uppercase text-sm mb-4"
             style={{ animationDelay: "0ms", animationFillMode: "forwards" }}
           >
             Photo Gallery
           </p>
           <h2
-            className="section-heading mb-4 animate-fade-in-up opacity-0"
+            className="section-heading mb-4"
             style={{ animationDelay: "100ms", animationFillMode: "forwards" }}
           >
             Tour Highlights
           </h2>
           <p
-            className="section-subheading max-w-2xl mx-auto animate-fade-in-up opacity-0"
+            className="section-subheading max-w-2xl mx-auto text-balance"
             style={{ animationDelay: "200ms", animationFillMode: "forwards" }}
           >
             Click on a day to explore the gallery of photos.
@@ -178,14 +174,16 @@ export function PhotoCarousel({ locationId }: PhotoCarouselProps) {
 
         {/* Day Cards */}
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto animate-fade-in-up opacity-0"
+          className="mx-auto flex max-w-6xl snap-x gap-5 overflow-x-auto pb-5 md:overflow-visible"
           style={{ animationDelay: "300ms", animationFillMode: "forwards" }}
         >
           {days.map((day, index) => (
             <button
               key={day.id}
               onClick={() => setSelectedDayIndex(index)}
-              className="group relative overflow-hidden rounded-xl aspect-[4/3] bg-muted transition-all duration-500 hover:shadow-xl hover:scale-[1.02]"
+              className={`group relative min-h-[360px] min-w-[82vw] snap-center overflow-hidden rounded-[2rem] bg-muted text-left shadow-sm transition-all duration-500 hover:-translate-y-1 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 md:min-w-0 md:flex-1 ${
+                index % 2 === 1 ? "md:mt-12" : ""
+              }`}
             >
               <img
                 src={day.coverImage}
@@ -196,17 +194,26 @@ export function PhotoCarousel({ locationId }: PhotoCarouselProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-transparent" />
               
               {/* Content */}
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-left">
+              <div className="absolute inset-x-0 bottom-0 p-6">
                 <span className="inline-block px-3 py-1 bg-primary text-primary-foreground text-xs font-medium rounded-full mb-2">
                   {day.label}
                 </span>
-                <p className="text-card text-sm font-light">
-                  {day.photos.length} photos
-                </p>
+                <div className="flex items-end justify-between gap-4">
+                  <div>
+                    <h3 className="font-serif text-2xl text-card">Tour Highlights</h3>
+                    <p className="mt-1 flex items-center gap-2 text-card/85 text-sm font-light">
+                      <Images className="h-4 w-4" />
+                      {day.photos.length} photos
+                    </p>
+                  </div>
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-card/95 text-foreground shadow-sm transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
               </div>
 
               {/* Hover Effect */}
-              <div className="absolute inset-0 border-2 border-primary/0 group-hover:border-primary/50 rounded-xl transition-all duration-300" />
+              <div className="absolute inset-0 rounded-[2rem] border-2 border-primary/0 transition-all duration-300 group-hover:border-primary/50" />
             </button>
           ))}
         </div>

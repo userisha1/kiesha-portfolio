@@ -1,4 +1,4 @@
-import { Building2 } from "lucide-react";
+import { ArrowUpRight, Building2, MapPinned } from "lucide-react";
 
 interface Company {
   name: string;
@@ -12,43 +12,51 @@ interface LocationCompaniesProps {
 
 export function LocationCompanies({ companies, locationName }: LocationCompaniesProps) {
   return (
-    <section id="companies" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <p
-            className="text-primary font-medium tracking-wide uppercase text-sm mb-4 animate-fade-in-up opacity-0"
-            style={{ animationDelay: "0ms", animationFillMode: "forwards" }}
-          >
-            Industry Exposure
-          </p>
-          <h2
-            className="section-heading mb-4 animate-fade-in-up opacity-0"
-            style={{ animationDelay: "100ms", animationFillMode: "forwards" }}
-          >
-            Companies Visited
-          </h2>
-          <p
-            className="section-subheading max-w-2xl mx-auto animate-fade-in-up opacity-0"
-            style={{ animationDelay: "200ms", animationFillMode: "forwards" }}
-          >
-            Professional exposure gained during our visit to {locationName}.
-          </p>
+    <section id="companies" className="relative overflow-hidden py-24 bg-background">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+      <div className="container relative mx-auto px-6">
+        <div className="mx-auto mb-16 flex max-w-6xl flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className="text-primary font-medium tracking-wide uppercase text-sm mb-4">
+              Industry Exposure
+            </p>
+            <h2 className="section-heading mb-4">Companies Visited</h2>
+          </div>
+          <div className="max-w-xl rounded-[1.75rem] border border-border bg-card/70 p-5 shadow-sm backdrop-blur">
+            <div className="mb-3 flex items-center gap-2 text-primary">
+              <MapPinned className="h-4 w-4" />
+              <span className="text-xs font-semibold uppercase tracking-widest">{locationName} Route</span>
+            </div>
+            <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+              Professional exposure gained through guided visits, technical discussions, and workplace observation.
+            </p>
+          </div>
         </div>
 
-        {/* Companies Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5">
           {companies.map((company, index) => (
             <div
               key={company.name}
-              className="group p-6 bg-card rounded-xl border border-border hover:border-primary/30 hover:shadow-lg transition-all duration-500 animate-fade-in-up opacity-0"
-              style={{ animationDelay: `${300 + index * 100}ms`, animationFillMode: "forwards" }}
+              className={`group relative overflow-hidden rounded-[2rem] border border-border bg-card p-6 shadow-sm transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-xl md:p-8 ${
+                index % 2 === 1 ? "md:ml-16" : "md:mr-16"
+              }`}
             >
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors duration-300">
-                <Building2 className="w-6 h-6 text-primary" />
+              <div className="absolute right-6 top-3 font-serif text-8xl text-primary/10 md:text-9xl">
+                {String(index + 1).padStart(2, "0")}
               </div>
-              <h3 className="font-serif text-xl mb-2">{company.name}</h3>
-              <p className="text-muted-foreground text-sm">{company.description}</p>
+              <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                <div className="max-w-2xl">
+                  <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors duration-300">
+                    <Building2 className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="mb-3 font-serif text-3xl leading-tight md:text-4xl">{company.name}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground md:text-base">{company.description}</p>
+                </div>
+                <div className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+                  Visit note
+                  <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </div>
+              </div>
             </div>
           ))}
         </div>

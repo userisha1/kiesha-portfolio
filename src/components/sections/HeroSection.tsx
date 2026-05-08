@@ -36,7 +36,7 @@ export function HeroSection() {
               </h1>
               <div className="space-y-4 text-muted-foreground text-lg">
                 <p className="font-medium text-foreground">
-                  BSIT — 3rd Year Student
+                  BSIT - 3rd Year Student
                 </p>
                 <p className="max-w-md mx-auto lg:mx-0">
                   Documenting my journey through internship experiences, 

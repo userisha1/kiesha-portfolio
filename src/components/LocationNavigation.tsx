@@ -60,8 +60,8 @@ export function LocationNavigation({ currentLocation }: LocationNavigationProps)
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="container mx-auto min-w-0 px-4 md:px-6">
+        <div className="grid h-16 min-w-0 grid-cols-[auto_1fr_auto] items-center gap-3 md:flex md:h-20 md:justify-between">
           {/* Home Button */}
           <button
             onClick={() => navigate("/")}
@@ -72,7 +72,7 @@ export function LocationNavigation({ currentLocation }: LocationNavigationProps)
           </button>
 
           {/* Location Switcher */}
-          <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1">
+          <div className="mx-auto flex min-w-0 items-center gap-1 rounded-full bg-muted/70 p-1">
             {locations.map((loc) => (
               <button
                 key={loc}
@@ -115,8 +115,8 @@ export function LocationNavigation({ currentLocation }: LocationNavigationProps)
           </ul>
 
           {/* Mobile: EDUC TOUR label */}
-          <span className="md:hidden text-xs font-medium text-muted-foreground tracking-wider">
-            EDUC TOUR 2025
+          <span className="md:hidden max-w-[72px] truncate text-right text-[10px] font-semibold text-muted-foreground tracking-wider">
+            TOUR 2025
           </span>
 
           {/* Theme Toggle */}

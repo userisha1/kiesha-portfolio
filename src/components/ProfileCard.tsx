@@ -65,9 +65,9 @@ export function ProfileCard({ photos }: ProfileCardProps) {
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-20" />
           
           {/* Click hint */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30">
-            <div className="px-4 py-2 bg-background/80 backdrop-blur-md rounded-full border border-border/50">
-              <p className="text-sm font-medium">Click to see next photo</p>
+          <div className="absolute left-4 top-4 z-30">
+            <div className="px-4 py-2 bg-background/80 backdrop-blur-md rounded-full border border-border/50 shadow-sm">
+              <p className="text-xs font-semibold text-foreground">Tap to switch photo</p>
             </div>
           </div>
           
