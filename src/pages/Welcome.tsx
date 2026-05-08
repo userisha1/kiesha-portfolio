@@ -617,7 +617,6 @@ function JournalSection() {
             <Stack
               randomRotation
               sensitivity={180}
-              mobileClickOnly
               pauseOnHover
               cards={journalPages.map((page, idx) => (
                 <button
